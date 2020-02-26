@@ -13,7 +13,8 @@ const courseSchema = new mongoose.Schema(
     name: String,
     author: String,
     tags: [String],
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: Number
   },
   { timestamps: true }
 );
@@ -22,15 +23,16 @@ const Course = mongoose.model('Course', courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    name: 'React.js Course',
-    author: 'Mosh',
-    tags: ['react', 'frontend'],
+    name: 'Golang Course',
+    author: 'Colt Steel',
+    tags: ['golang', 'backend'],
     isPublished: true
   });
 
   const result = await course.save();
   console.log(result);
 };
+// createCourse();
 
 const getCourses = async () => {
   /* COMPARISON OPERATORS */
@@ -68,5 +70,20 @@ const getCourses = async () => {
   // .countDocuments();
   console.log(courses);
 };
+// getCourses();
 
-getCourses();
+// Get all the published backend courses,
+// that are $15 or more,
+// or have the word 'js' in name
+// sort them by their price in descending order,
+// pick only their name, price and author,
+// and display them
+const exercise1 = async () => {
+  const courses = await Course.find({ tags: 'backend', isPublished: true })
+    .or([{ price: { $gte: 15 } }, { name: /.*js.*/ }])
+    // .sort({ name: 1 })
+    .sort('-price')
+    .select({ name: 1, author: 1, price: 1 });
+  console.log(courses);
+};
+exercise1();
