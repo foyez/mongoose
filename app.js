@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 mongoose
   .connect('mongodb://foyez:testpass1@ds111648.mlab.com:11648/foyez-mongodb', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   })
   .then('Connected to MongoDB...')
   .catch(err => console.log('Could not connect to MongoDB', err));
@@ -116,7 +117,14 @@ const updateCourse = async id => {
   );
   console.log(course);
 };
-updateCourse('5e569bf1695050374d5df5ad');
+// updateCourse('5e569bf1695050374d5df5ad');
+
+const removeCourse = async id => {
+  // const result = await Course.deleteOne({ _id: id });
+  const course = await Course.findByIdAndRemove(id);
+  console.log(course);
+};
+removeCourse('5e569bf1695050374d5df5ad');
 
 // Get all the published backend courses,
 // that are $15 or more,
