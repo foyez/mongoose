@@ -72,6 +72,52 @@ const getCourses = async () => {
 };
 // getCourses();
 
+const updateCourse = async id => {
+  // Approach: Query first
+  // findById()
+  // Modify its properties
+  // save()
+  /*
+  const course = await Course.findById(id);
+  if (!course) return;
+
+  // course.isPublished = true;
+  // course.author = 'Another Author';
+  course.set({
+    isPublished: true,
+    author: 'Another Author'
+  });
+
+  const result = await course.save();
+  console.log(result);
+  */
+
+  // Approach: update first
+  // Update directly
+  // Optionally: get the updated document
+  // const result = await Course.updateOne(
+  //   { _id: id },
+  //   {
+  //     $set: {
+  //       author: 'Mosh',
+  //       isPublished: false
+  //     }
+  //   }
+  // );
+  const course = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author: 'Jason',
+        isPublished: true
+      }
+    },
+    { new: true }
+  );
+  console.log(course);
+};
+updateCourse('5e569bf1695050374d5df5ad');
+
 // Get all the published backend courses,
 // that are $15 or more,
 // or have the word 'js' in name
@@ -86,4 +132,4 @@ const exercise1 = async () => {
     .select({ name: 1, author: 1, price: 1 });
   console.log(courses);
 };
-exercise1();
+// exercise1();
