@@ -6,7 +6,7 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false
   })
-  .then('Connected to MongoDB...')
+  .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.log('Could not connect to MongoDB', err));
 
 const Author = mongoose.model(
