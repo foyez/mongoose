@@ -92,7 +92,7 @@ const createCourse = async () => {
     }
   }
 };
-createCourse();
+// createCourse();
 
 const getCourses = async () => {
   /* COMPARISON OPERATORS */
