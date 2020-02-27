@@ -21,7 +21,10 @@ const courseSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['web', 'mobile', 'network']
+      enum: ['web', 'mobile', 'network'],
+      lowercase: true,
+      // uppercase: true,
+      trim: true
     },
     author: String,
     // tags: [String],
@@ -60,7 +63,9 @@ const courseSchema = new mongoose.Schema(
         return this.isPublished;
       },
       min: 10,
-      max: 200
+      max: 200,
+      get: val => Math.round(val), // rounded value from database
+      set: val => Math.round(val) // rounded value of user input
     }
   },
   { timestamps: true }
@@ -71,11 +76,11 @@ const Course = mongoose.model('Course', courseSchema);
 const createCourse = async () => {
   const course = new Course({
     name: 'Golang Course',
-    category: '-',
+    category: 'Web',
     author: 'Colt Steel',
-    tags: null,
+    tags: ['backend'],
     isPublished: true,
-    price: 15
+    price: 15.6
   });
 
   try {
