@@ -11,11 +11,29 @@ mongoose
 
 const courseSchema = new mongoose.Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 20
+      // match: /pattern/
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: ['web', 'mobile', 'network']
+    },
     author: String,
     tags: [String],
     isPublished: Boolean,
-    price: Number
+    price: {
+      type: Number,
+      required: function() {
+        return this.isPublished;
+      },
+      min: 10,
+      max: 200
+    }
   },
   { timestamps: true }
 );
@@ -25,15 +43,21 @@ const Course = mongoose.model('Course', courseSchema);
 const createCourse = async () => {
   const course = new Course({
     name: 'Golang Course',
+    category: '-',
     author: 'Colt Steel',
     tags: ['golang', 'backend'],
-    isPublished: true
+    isPublished: true,
+    price: 15
   });
 
-  const result = await course.save();
-  console.log(result);
+  try {
+    const result = await course.save();
+    console.log(result);
+  } catch (err) {
+    console.log(err.message);
+  }
 };
-// createCourse();
+createCourse();
 
 const getCourses = async () => {
   /* COMPARISON OPERATORS */
@@ -124,7 +148,7 @@ const removeCourse = async id => {
   const course = await Course.findByIdAndRemove(id);
   console.log(course);
 };
-removeCourse('5e569bf1695050374d5df5ad');
+// removeCourse('5e569bf1695050374d5df5ad');
 
 // Get all the published backend courses,
 // that are $15 or more,
