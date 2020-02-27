@@ -71,7 +71,7 @@ const Course = mongoose.model('Course', courseSchema);
 const createCourse = async () => {
   const course = new Course({
     name: 'Golang Course',
-    category: 'web',
+    category: '-',
     author: 'Colt Steel',
     tags: null,
     isPublished: true,
@@ -82,7 +82,9 @@ const createCourse = async () => {
     const result = await course.save();
     console.log(result);
   } catch (err) {
-    console.log(err.message);
+    for (field in err.errors) {
+      console.log(field, ': ', err.errors[field].message);
+    }
   }
 };
 createCourse();
