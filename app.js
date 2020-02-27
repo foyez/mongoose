@@ -24,7 +24,20 @@ const courseSchema = new mongoose.Schema(
       enum: ['web', 'mobile', 'network']
     },
     author: String,
-    tags: [String],
+    // tags: [String],
+    // tags: {
+    //   type: Array,
+    //   validate: {
+    //     validator: function(val) {
+    //       return val && val.length > 0;
+    //     }
+    //   message: 'A course should have at least one tag.'
+    //   },
+    // },
+    tags: {
+      type: Array,
+      validate: [val => val && val.length > 0, 'A course should have at least one tag.']
+    },
     isPublished: Boolean,
     price: {
       type: Number,
@@ -43,9 +56,9 @@ const Course = mongoose.model('Course', courseSchema);
 const createCourse = async () => {
   const course = new Course({
     name: 'Golang Course',
-    category: '-',
+    category: 'web',
     author: 'Colt Steel',
-    tags: ['golang', 'backend'],
+    tags: null,
     isPublished: true,
     price: 15
   });
