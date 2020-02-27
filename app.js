@@ -30,13 +30,28 @@ const courseSchema = new mongoose.Schema(
     //   validate: {
     //     validator: function(val) {
     //       return val && val.length > 0;
-    //     }
+    //     },
     //   message: 'A course should have at least one tag.'
     //   },
     // },
+    // tags: {
+    //   type: Array,
+    //   validate: [val => val && val.length > 0, 'A course should have at least one tag.']
+    // },
     tags: {
       type: Array,
-      validate: [val => val && val.length > 0, 'A course should have at least one tag.']
+      // Async validation
+      validate: {
+        validator: val =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              const isValid = val && val.length > 0;
+              resolve(isValid);
+            }, 5000);
+          }),
+        // validator: () => Promise.resolve(false),
+        message: 'A course should have at least one tag.'
+      }
     },
     isPublished: Boolean,
     price: {
