@@ -94,4 +94,4 @@ const removeAuthor = async (courseId, authorId) => {
 // createCourse('Node Course', [new Author({ name: 'Mosh' }), new Author({ name: 'John' })]);
 // updateAuthor('5e57d87695e099195683fdfd');
 // addAuthor('5e57e692bf9b4720421c9aea', new Author({ name: 'Foyez' }));
-removeAuthor('5e57e9588e3ada229ce4c196', '5e57e9588e3ada229ce4c194');
+// removeAuthor('5e57e9588e3ada229ce4c196', '5e57e9588e3ada229ce4c194');
